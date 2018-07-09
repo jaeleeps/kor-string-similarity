@@ -1,5 +1,3 @@
-// var async = require('async');
-
 var rCho =
         [ "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ",
             "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ" ];
@@ -32,9 +30,9 @@ var handleSyllables = function(str) {
   var tempStr = str.charCodeAt(0) - 0xAC00;
   var arr = [];
   jong = tempStr % 28; // 종성
-  jung = ((tempStr - jong) / 28 ) % 21 // 중성
-  cho = (((tempStr - jong) / 28 ) - jung ) / 21 // 종성
-  console.log("초성:" + rCho[cho] + " 중성:" + rJung[jung] + " 종성:" + rJong[jong]);
+  jung = ((tempStr - jong) / 28 ) % 21;  // 중성
+  cho = (((tempStr - jong) / 28 ) - jung ) / 21; // 종성
+  // console.log("초성:" + rCho[cho] + " 중성:" + rJung[jung] + " 종성:" + rJong[jong]);
   (rCho[cho] != (null||undefined||"")) ? arr.push(rCho[cho]) : arr.push("empt");
   (rJung[jung] != (null||undefined||"")) ? arr.push(rJung[jung]) : arr.push("empt");
   (rJong[jong] != (null||undefined||"")) ? arr.push(rJong[jong]) : arr.push("empt");
@@ -78,7 +76,4 @@ var getStrArr = function(str) {
   return resultarr;
 }
 
-console.log(strSeparator("hihiㄻㄴ어라ㅓㄴㅇ"));
-console.log(getStrArr("hihiㄻㄴ어라ㅓㄴㅇ"));
-console.log(getStrArr("ㄱ"));
-console.log(getStrArr(""));
+module.exports = getStrArr;

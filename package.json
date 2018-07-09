@@ -1,32 +1,27 @@
 {
   "name": "kor-string-similarity",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "dice coefficient/NphoEd based string-similarity calculator",
-  "author": { "name": "Jaeyouung Lee", "email": "jaeleeps@gatech.edu", "url": "" },
-  "contributors": [
-  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/outsideris/passport-me2day.git"
+    "url": "git+https://github.com/jaeleeps/kor-string-similarity.git"
   },
+  "keywords": [
+    "[\"string\"",
+    "\"similarity\"",
+    "\"string-similarity\"",
+    "\"dice\"",
+    "\"phoneme\"",
+    "\"korean\"]"
+  ],
+  "author": "Jaeyoung Lee",
+  "license": "ISC",
   "bugs": {
-    "url": "http://github.com/outsideris/passport-me2day/issues"
+    "url": "https://github.com/jaeleeps/kor-string-similarity/issues"
   },
-  "main": "./lib/passport-me2day",
-  "dependencies": {
-    "pkginfo": "0.2.x",
-    "passport": "~0.1.3"
-  },
-  "devDependencies": {
-    "vows": "0.6.x"
-  },
-  "scripts": {
-    "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
-  },
-  "engines": { "node": ">= 0.4.0" },
-  "licenses": [ {
-    "type": "MIT",
-    "url": "http://www.opensource.org/licenses/MIT"
-  } ],
-  "keywords": ["passport", "me2day", "auth", "authn", "authentication", "identity"]
+  "homepage": "https://github.com/jaeleeps/kor-string-similarity#readme"
 }
