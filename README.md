@@ -1,5 +1,7 @@
 # kor-string-similarity
 
+Calculates string similarity between two strings(Korean, alphabet, number, special characters, etc.), based on dice coefficient and NphoEd(Normallized phoneme-based metric)
+
 [Sørensen–Dice coefficient][wiki].
 
 ## API
