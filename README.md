@@ -1,4 +1,4 @@
-# kor-string-similarity [![Build Status][codecov]
+# kor-string-similarity
 
 [Sørensen–Dice coefficient][wiki].
 
@@ -21,3 +21,5 @@ stringSimilarity.compareTwoStrings("다람쥐 헌 쳇바퀴에 타고파","고�
 stringSimilarity.findBestMatch("다람쥐 헌 쳇바퀴에 타고파", ["다람쥐 헌 쳇바퀴에 타고파", "고양이 새 쳇바퀴에 안 타고파", "생쥐 새 쳇바퀴에 타고파파"]); // => { _text: '다람쥐 헌 쳇바퀴에 타고파', similarity: 1}
 stringSimilarity.arrangeBySimilarity("다람쥐 헌 쳇바퀴에 타고파", ["다람쥐 헌 쳇바퀴에 타고파", "고양이 새 쳇바퀴에 안 타고파", "생쥐 새 쳇바퀴에 타고파"]); // => [{ _text: '다람쥐 헌 쳇바퀴에 타고파', similarity: 1}, { _text: '생쥐 새 쳇바퀴에 타고파', similarity: 0.7536231884057971}, { _text: '고양이 새 쳇바퀴에 안 타고파', similarity: 0.657894736842105}]
 ```
+<!-- Definitions -->
+[wiki]: http://en.wikipedia.org/wiki/Sørensen–Dice_coefficient
