@@ -15,7 +15,7 @@ npm install kor-string-similarity
 Use:
 
 ```js
-var stringSimilarity = require('kor-stringSimilarity');
+var stringSimilarity = require('kor-string-similarity');
 
 stringSimilarity.compareTwoStrings("각난닫","각난닫");
 // => 1
