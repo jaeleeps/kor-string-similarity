@@ -12,11 +12,13 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsc",
     "test": "npm run build && node --test test/*.test.js",
+    "prepack": "npm run build",
     "prepublishOnly": "npm test"
   },
   "engines": {
