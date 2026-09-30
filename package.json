@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run build && node --test test/*.test.js",
+    "prepack": "npm run build",
     "prepublishOnly": "npm test"
   },
   "engines": {
