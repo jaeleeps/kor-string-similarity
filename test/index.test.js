@@ -11,6 +11,10 @@ test("toPhonemes decomposes Hangul syllables and keeps other characters", () => 
   assert.deepEqual(toPhonemes("힣"), ["ㅎ", "ㅣ", "ㅎ"]);
 });
 
+test("toPhonemes treats decomposed (NFD) Hangul like precomposed", () => {
+  assert.deepEqual(toPhonemes("각".normalize("NFD")), ["ㄱ", "ㅏ", "ㄱ"]);
+});
+
 test("toBigrams always yields at least one bigram", () => {
   assert.deepEqual(toBigrams(""), ["emptundefined"]);
   assert.deepEqual(toBigrams("a"), ["aundefined"]);
@@ -25,6 +29,7 @@ test("compareTwoStrings", () => {
   assert.equal(compareTwoStrings("Hello", "hallo"), 0.6);
   assert.equal(compareTwoStrings("a", "A"), 1);
   assert.equal(compareTwoStrings("", ""), 1);
+  assert.equal(compareTwoStrings("안녕하세요".normalize("NFD"), "안녕하세요"), 1);
 });
 
 test("arrangeBySimilarity sorts by descending similarity", () => {

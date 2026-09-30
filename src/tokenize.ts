@@ -50,16 +50,20 @@ function decomposeSyllable(code: number): [string, string, string] {
  * three jamo tokens (initial, medial, final); every other UTF-16 code unit is
  * kept as-is.
  *
+ * Input is NFC-normalized first, so decomposed Hangul (e.g. from macOS
+ * filenames) is treated the same as precomposed syllables.
+ *
  * @example toPhonemes("각a") // => ["ㄱ", "ㅏ", "ㄱ", "a"]
  */
 export function toPhonemes(str: string): string[] {
   const tokens: string[] = [];
-  for (let i = 0; i < str.length; i++) {
-    const code = str.charCodeAt(i);
+  const normalized = str.normalize("NFC");
+  for (let i = 0; i < normalized.length; i++) {
+    const code = normalized.charCodeAt(i);
     if (code >= HANGUL_FIRST && code <= HANGUL_LAST) {
       tokens.push(...decomposeSyllable(code));
     } else {
-      tokens.push(str[i]);
+      tokens.push(normalized[i]);
     }
   }
   return tokens;
