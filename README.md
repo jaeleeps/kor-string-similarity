@@ -34,7 +34,7 @@ findBestMatch("다람쥐 헌 쳇바퀴에 타고파", [
   "고양이 새 쳇바퀴에 안 타고파",
   "다람쥐 헌 쳇바퀴에 타고파",
 ]);
-// => { _text: "다람쥐 헌 쳇바퀴에 타고파", similarity: 1 }
+// => { text: "다람쥐 헌 쳇바퀴에 타고파", similarity: 1, ... }
 
 arrangeBySimilarity("다람쥐 헌 쳇바퀴에 타고파", [
   "다람쥐 헌 쳇바퀴에 타고파",
@@ -42,9 +42,9 @@ arrangeBySimilarity("다람쥐 헌 쳇바퀴에 타고파", [
   "생쥐 새 쳇바퀴에 타고파",
 ]);
 // => [
-//   { _text: "다람쥐 헌 쳇바퀴에 타고파", similarity: 1 },
-//   { _text: "생쥐 새 쳇바퀴에 타고파", similarity: 0.7536231884057971 },
-//   { _text: "고양이 새 쳇바퀴에 안 타고파", similarity: 0.6578947368421053 },
+//   { text: "다람쥐 헌 쳇바퀴에 타고파", similarity: 1, ... },
+//   { text: "생쥐 새 쳇바퀴에 타고파", similarity: 0.7536231884057971, ... },
+//   { text: "고양이 새 쳇바퀴에 안 타고파", similarity: 0.6578947368421053, ... },
 // ]
 ```
 
@@ -66,10 +66,13 @@ Returns every candidate with its score, most similar first. Candidates with equa
 
 ```ts
 interface Match {
-  _text: string;      // the candidate string
+  text: string;       // the candidate string
   similarity: number; // 0 to 1
+  _text: string;      // deprecated: same value as `text`
 }
 ```
+
+`_text` is the field name from 1.x. It is still returned so existing code keeps working, but it is deprecated and will be removed in the next major version. Use `text` instead.
 
 ### Errors
 
@@ -95,6 +98,7 @@ Because the text is compared at the jamo level, changing one vowel or final cons
 - `candidates` must be an array of strings. In 1.x any object was accepted, and non-string items were converted to strings.
 - Deep imports such as `kor-string-similarity/strSeparator.js` are gone. Import from the package root only.
 - Node.js 22 or newer is required.
+- Results have a new `text` field. The old `_text` field is still returned with the same value but is deprecated, so switch `match._text` to `match.text` when you upgrade.
 
 See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
 

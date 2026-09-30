@@ -16,7 +16,12 @@ follows [Semantic Versioning](https://semver.org/).
 ### Added
 
 - TypeScript types (`Match` and all function signatures).
+- `text` field on `Match` results.
 - Docstrings on every export, a README with API reference, and this changelog.
+
+### Deprecated
+
+- `Match._text`. Use `text` instead. `_text` is still returned with the same value and will be removed in the next major version.
 
 ### Fixed
 
