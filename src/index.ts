@@ -3,6 +3,11 @@ import { toBigrams } from "./tokenize";
 /** A candidate string paired with its similarity to the target. */
 export interface Match {
   /** The candidate string. */
+  text: string;
+  /**
+   * The candidate string, same value as {@link Match.text}. Kept for 1.x compatibility.
+   * @deprecated Use `text` instead. Will be removed in the next major version.
+   */
   _text: string;
   /** Similarity to the target, from `0` (nothing in common) to `1` (identical). */
   similarity: number;
@@ -80,16 +85,16 @@ export function compareTwoStrings(target: string, compared: string): number {
  *
  * @example
  * arrangeBySimilarity("사과", ["바나나", "사과", "사자"]);
- * // => [{ _text: "사과", similarity: 1 },
- * //     { _text: "사자", similarity: 0.5 },
- * //     { _text: "바나나", similarity: 0.26666666666666666 }]
+ * // => [{ text: "사과", similarity: 1, ... },
+ * //     { text: "사자", similarity: 0.5, ... },
+ * //     { text: "바나나", similarity: 0.26666666666666666, ... }]
  */
 export function arrangeBySimilarity(target: string, candidates: readonly string[]): Match[] {
   assertString(target, "target", "arrangeBySimilarity");
   assertStringArray(candidates, "candidates", "arrangeBySimilarity");
   const targetBigrams = countBigrams(target);
   return candidates
-    .map((text) => ({ _text: text, similarity: dice(targetBigrams, countBigrams(text)) }))
+    .map((text) => ({ text, _text: text, similarity: dice(targetBigrams, countBigrams(text)) }))
     .sort((a, b) => b.similarity - a.similarity);
 }
 
@@ -104,7 +109,7 @@ export function arrangeBySimilarity(target: string, candidates: readonly string[
  *
  * @example
  * findBestMatch("사과", ["바나나", "사과", "사자"]);
- * // => { _text: "사과", similarity: 1 }
+ * // => { text: "사과", similarity: 1, ... }
  */
 export function findBestMatch(target: string, candidates: readonly string[]): Match | undefined {
   assertString(target, "target", "findBestMatch");

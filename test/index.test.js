@@ -5,6 +5,9 @@ const { toPhonemes, toBigrams } = require("../dist/tokenize");
 
 const TARGET = "다람쥐 헌 쳇바퀴에 타고파";
 
+// Results carry both `text` and the deprecated `_text` with the same value.
+const match = (text, similarity) => ({ text, _text: text, similarity });
+
 test("toPhonemes decomposes Hangul syllables and keeps other characters", () => {
   assert.deepEqual(toPhonemes("각a"), ["ㄱ", "ㅏ", "ㄱ", "a"]);
   assert.deepEqual(toPhonemes("가"), ["ㄱ", "ㅏ", "empt"]);
@@ -41,9 +44,9 @@ test("arrangeBySimilarity sorts by descending similarity", () => {
   assert.deepEqual(
     arrangeBySimilarity(TARGET, [TARGET, "고양이 새 쳇바퀴에 안 타고파", "생쥐 새 쳇바퀴에 타고파"]),
     [
-      { _text: TARGET, similarity: 1 },
-      { _text: "생쥐 새 쳇바퀴에 타고파", similarity: 0.7536231884057971 },
-      { _text: "고양이 새 쳇바퀴에 안 타고파", similarity: 0.6578947368421053 },
+      match(TARGET, 1),
+      match("생쥐 새 쳇바퀴에 타고파", 0.7536231884057971),
+      match("고양이 새 쳇바퀴에 안 타고파", 0.6578947368421053),
     ],
   );
 });
@@ -51,7 +54,7 @@ test("arrangeBySimilarity sorts by descending similarity", () => {
 test("findBestMatch", () => {
   assert.deepEqual(
     findBestMatch(TARGET, [TARGET, "고양이 새 쳇바퀴에 안 타고파", "햄스터 새 쳇바퀴에 타고파"]),
-    { _text: TARGET, similarity: 1 },
+    match(TARGET, 1),
   );
   assert.equal(findBestMatch(TARGET, []), undefined);
 });
