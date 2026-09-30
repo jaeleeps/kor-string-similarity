@@ -1,27 +1,48 @@
 {
   "name": "kor-string-similarity",
-  "version": "1.0.1",
-  "description": "dice coefficient/NphoEd based string-similarity calculator",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Korean-aware string similarity based on the Dice coefficient over jamo (phoneme) bigrams",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "node test.js"
+    "build": "tsc",
+    "test": "npm run build && node --test test/",
+    "prepublishOnly": "npm test"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaeleeps/kor-string-similarity.git"
   },
   "keywords": [
-    "[\"string\"",
-    "\"similarity\"",
-    "\"string-similarity\"",
-    "\"dice\"",
-    "\"phoneme\"",
-    "\"korean\"]"
+    "string",
+    "similarity",
+    "string-similarity",
+    "dice",
+    "phoneme",
+    "jamo",
+    "hangul",
+    "korean"
   ],
   "author": "Jaeyoung Lee",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jaeleeps/kor-string-similarity/issues"
   },
-  "homepage": "https://github.com/jaeleeps/kor-string-similarity#readme"
+  "homepage": "https://github.com/jaeleeps/kor-string-similarity#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
 }
