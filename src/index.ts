@@ -20,22 +20,31 @@ function assertStringArray(value: unknown, name: string, fn: string): asserts va
   }
 }
 
-/** Sørensen–Dice coefficient over the (case-insensitive) phoneme bigrams of two strings. */
-function dice(a: string, b: string): number {
-  const left = toBigrams(a.toLowerCase());
-  const right: (string | null)[] = toBigrams(b.toLowerCase());
-  const total = left.length + right.length;
-  let intersections = 0;
+/** The case-insensitive phoneme bigrams of a string, counted by value. */
+interface BigramCounts {
+  counts: Map<string, number>;
+  total: number;
+}
 
-  for (const bigram of left) {
-    const index = right.indexOf(bigram);
-    if (index !== -1) {
-      intersections++;
-      right[index] = null; // each bigram can only be matched once
-    }
+function countBigrams(str: string): BigramCounts {
+  const bigrams = toBigrams(str.toLowerCase());
+  const counts = new Map<string, number>();
+  for (const bigram of bigrams) {
+    counts.set(bigram, (counts.get(bigram) ?? 0) + 1);
   }
+  return { counts, total: bigrams.length };
+}
 
-  return (2 * intersections) / total;
+/**
+ * Sørensen–Dice coefficient of two bigram multisets. A bigram occurring
+ * m times on one side and n times on the other contributes min(m, n) matches.
+ */
+function dice(a: BigramCounts, b: BigramCounts): number {
+  let intersections = 0;
+  for (const [bigram, count] of a.counts) {
+    intersections += Math.min(count, b.counts.get(bigram) ?? 0);
+  }
+  return (2 * intersections) / (a.total + b.total);
 }
 
 /**
@@ -57,7 +66,7 @@ function dice(a: string, b: string): number {
 export function compareTwoStrings(target: string, compared: string): number {
   assertString(target, "target", "compareTwoStrings");
   assertString(compared, "compared", "compareTwoStrings");
-  return dice(target, compared);
+  return dice(countBigrams(target), countBigrams(compared));
 }
 
 /**
@@ -78,8 +87,9 @@ export function compareTwoStrings(target: string, compared: string): number {
 export function arrangeBySimilarity(target: string, candidates: readonly string[]): Match[] {
   assertString(target, "target", "arrangeBySimilarity");
   assertStringArray(candidates, "candidates", "arrangeBySimilarity");
+  const targetBigrams = countBigrams(target);
   return candidates
-    .map((text) => ({ _text: text, similarity: dice(target, text) }))
+    .map((text) => ({ _text: text, similarity: dice(targetBigrams, countBigrams(text)) }))
     .sort((a, b) => b.similarity - a.similarity);
 }
 
