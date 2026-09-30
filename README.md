@@ -19,7 +19,7 @@ Other characters (Latin letters, digits, symbols, spaces) are compared as they a
 npm install kor-string-similarity
 ```
 
-Requires Node.js 18 or newer. TypeScript types are included.
+Requires Node.js 22 or newer. TypeScript types are included.
 
 ## Usage
 
@@ -91,11 +91,12 @@ Because the text is compared at the jamo level, changing one vowel or final cons
 
 - Decomposed (NFD) Hangul is now normalized, so it scores the same as precomposed text. In 1.x it was not recognized as Hangul.
 - Characters outside the Basic Multilingual Plane, such as emoji, are compared as whole characters. In 1.x they were split into two UTF-16 halves, so different emoji could look partly alike.
-
 - Invalid input now **throws** a `TypeError`. In 1.x the functions *returned* an `Error` object.
 - `candidates` must be an array of strings. In 1.x any object was accepted, and non-string items were converted to strings.
 - Deep imports such as `kor-string-similarity/strSeparator.js` are gone. Import from the package root only.
-- Node.js 18 or newer is required.
+- Node.js 22 or newer is required.
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
 
 ## Development
 
