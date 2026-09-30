@@ -77,7 +77,7 @@ Every function throws a `TypeError` if `target` is not a string, or if `candidat
 
 ## How it works
 
-1. **Split into phonemes.** The input is first [NFC-normalized][nfc], so decomposed Hangul (common in macOS filenames) matches ordinary text. Each Hangul syllable then becomes three tokens: its initial consonant, vowel and final consonant. A syllable with no final consonant gets an empty placeholder. Every other character is one token of its own.
+1. **Split into phonemes.** The input is first [NFC-normalized][nfc], so decomposed Hangul (common in macOS filenames) matches ordinary text. Each Hangul syllable then becomes three tokens: its initial consonant, vowel and final consonant. A syllable with no final consonant gets an empty placeholder. Every other character, including emoji, is one token of its own.
    `"각a"` → `ㄱ ㅏ ㄱ a`
 2. **Build bigrams.** Each token is paired with the one after it. The last token is paired with an end marker, so even a one-letter string has one bigram.
    `ㄱ ㅏ ㄱ a` → `ㄱㅏ`, `ㅏㄱ`, `ㄱa`, `a⟨end⟩`
@@ -90,6 +90,7 @@ Because the text is compared at the jamo level, changing one vowel or final cons
 2.0 gives the same scores as 1.x for ordinary text. What changed:
 
 - Decomposed (NFD) Hangul is now normalized, so it scores the same as precomposed text. In 1.x it was not recognized as Hangul.
+- Characters outside the Basic Multilingual Plane, such as emoji, are compared as whole characters. In 1.x they were split into two UTF-16 halves, so different emoji could look partly alike.
 
 - Invalid input now **throws** a `TypeError`. In 1.x the functions *returned* an `Error` object.
 - `candidates` must be an array of strings. In 1.x any object was accepted, and non-string items were converted to strings.

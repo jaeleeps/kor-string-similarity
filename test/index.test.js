@@ -15,6 +15,10 @@ test("toPhonemes treats decomposed (NFD) Hangul like precomposed", () => {
   assert.deepEqual(toPhonemes("각".normalize("NFD")), ["ㄱ", "ㅏ", "ㄱ"]);
 });
 
+test("toPhonemes keeps characters outside the BMP whole", () => {
+  assert.deepEqual(toPhonemes("a😀"), ["a", "😀"]);
+});
+
 test("toBigrams always yields at least one bigram", () => {
   assert.deepEqual(toBigrams(""), ["emptundefined"]);
   assert.deepEqual(toBigrams("a"), ["aundefined"]);
@@ -30,6 +34,7 @@ test("compareTwoStrings", () => {
   assert.equal(compareTwoStrings("a", "A"), 1);
   assert.equal(compareTwoStrings("", ""), 1);
   assert.equal(compareTwoStrings("안녕하세요".normalize("NFD"), "안녕하세요"), 1);
+  assert.equal(compareTwoStrings("a😀", "a😁"), 0);
 });
 
 test("arrangeBySimilarity sorts by descending similarity", () => {
